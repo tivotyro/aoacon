@@ -1,0 +1,21 @@
+{
+  "description": "Posts AOA Status to calculate AOACon",
+  "manifest_version": 2,
+  "name": "AOACon",
+  "version": "1.0",
+  "icons": {
+    "48": "icons/border-48.png"
+  },
+
+  "permissions": [
+    "*://*.amazonaws.com/*",
+    "webRequest"
+  ],
+
+  "content_scripts": [
+    {
+      "matches": ["*://aoa.sooschools.com/owsoo/home*"],
+      "js": ["aoacon.js"]
+    }
+  ]
+}
