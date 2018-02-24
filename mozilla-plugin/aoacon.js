@@ -3,17 +3,20 @@ var posturl = "https://8kdbjydp98.execute-api.us-east-1.amazonaws.com/Production
 var body = document.body.innerHTML;
 
 var regexp = /populatePlannerTabFromJson\((.*)\)\;/;
-var match, matches = [];
 
-match = regexp.exec(body);
+function processContent() {
+  var match, matches = [];
 
-if (match != null) {
-  var postdata = {
-    action: "updateStatus",
-    data: JSON.parse(match[1])
-  };
+  match = regexp.exec(body);
 
-  doPost(posturl, postdata);
+  if (match != null) {
+    var postdata = {
+      action: "updateStatus",
+      data: JSON.parse(match[1])
+    };
+
+    doPost(posturl, postdata);
+  }
 }
 
 function doPost(posturl, postdata) {
@@ -22,10 +25,19 @@ function doPost(posturl, postdata) {
   try {
 
     xmlhttp.onreadystatechange = function() {
+
         if (this.readyState == 4 && this.status == 200) {
-            console.log("SUCCESS");
-            console.log(this.responseText);
+            var obj = JSON.parse(this.responseText);
+            var sending = browser.runtime.sendMessage({
+              icon: "icons/aoacon-" + obj.status + ".png"
+            });
+            // sending.then((result) => {
+            //   console.log(result);
+            // });
+            //
+            // console.log("message sent");
         }
+
     };
 
     xmlhttp.open("POST", posturl, false);
@@ -40,22 +52,4 @@ function doPost(posturl, postdata) {
   }
 }
 
-
-
-
-
-
-
-
-
-
-
-/*
-function openPage() {
-  browser.tabs.create({
-    url: "https://developer.mozilla.org"
-  });
-}
-
-browser.browserAction.onClicked.addListener(openPage);
-*/
+window.addEventListener("load", processContent);

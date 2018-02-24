@@ -2,9 +2,9 @@
   "description": "Posts AOA Status to calculate AOACon",
   "manifest_version": 2,
   "name": "AOACon",
-  "version": "1.0",
+  "version": "1.1",
   "icons": {
-    "48": "icons/border-48.png"
+    "8": "icons/aoacon-0.png"
   },
 
   "permissions": [
@@ -12,10 +12,23 @@
     "webRequest"
   ],
 
+  "browser_action": {
+    "default_icon": "icons/aoacon-0.png",
+    "default_title": "AOACON"
+  },
+
+  "background": {
+    "scripts": [
+      "./icon.js"
+    ]
+  },
+
   "content_scripts": [
     {
       "matches": ["*://aoa.sooschools.com/owsoo/home*"],
-      "js": ["aoacon.js"]
+      "js": [
+        "aoacon.js"
+      ]
     }
   ]
 }
