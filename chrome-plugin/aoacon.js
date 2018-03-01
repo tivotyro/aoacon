@@ -1,4 +1,5 @@
 var posturl = "https://8kdbjydp98.execute-api.us-east-1.amazonaws.com/Production";
+
 var body = document.body.innerHTML;
 
 var regexp = /populatePlannerTabFromJson\((.*)\)\;/;
@@ -27,7 +28,7 @@ function doPost(posturl, postdata) {
 
         if (this.readyState == 4 && this.status == 200) {
             var obj = JSON.parse(this.responseText);
-            var sending = browser.runtime.sendMessage({
+            var sending = chrome.runtime.sendMessage({
               icon: "icons/aoacon-" + obj.status + ".png"
             });
             // sending.then((result) => {
